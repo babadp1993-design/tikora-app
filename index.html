@@ -1,75 +1,151 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090910">
-<title>TIKORA - Le monde en vidéos</title>
+<title>TIKORA</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;background:#090910;color:white;
+ margin:0;background:#08080d;color:white;
  font-family:Arial,sans-serif;
 }
 header{
- display:flex;justify-content:space-between;
- align-items:center;padding:18px;
+ padding:17px 20px;display:flex;
+ justify-content:space-between;align-items:center;
+ background:#101019;
 }
-.logo{font-size:30px;font-weight:900;color:#a78bfa}
-nav{display:flex;justify-content:space-around;padding:15px}
-nav span{font-weight:bold;color:#aaa}
-nav span:first-child{color:#a78bfa}
+.logo{font-size:27px;font-weight:900;color:#a855f7}
+header span{color:#ddd;font-size:13px}
+.feed{height:calc(100vh - 135px);padding:12px}
 .video{
- height:65vh;margin:10px;border-radius:18px;
- background:linear-gradient(160deg,#35205e,#111122,#251344);
- display:flex;flex-direction:column;
- justify-content:flex-end;padding:20px;
+ height:100%;border-radius:18px;
+ background:linear-gradient(145deg,#241044,#090912,#55128a);
+ display:flex;align-items:center;justify-content:center;
+ position:relative;overflow:hidden;
 }
-.video h2{font-size:24px}
+.video video{
+ width:100%;height:100%;object-fit:cover;
+ position:absolute;
+}
+.placeholder{text-align:center;padding:20px}
+.placeholder h2{font-size:35px;color:#d8a5ff}
+.placeholder p{color:#ddd}
 .actions{
- display:flex;justify-content:space-between;
- align-items:center;padding:12px 20px;
+ position:absolute;right:13px;bottom:75px;
+ display:flex;flex-direction:column;gap:23px;
+ z-index:2;
 }
-button{
- background:#8b5cf6;color:white;border:0;
- padding:13px 20px;border-radius:25px;
- font-weight:bold;
+.actions button{
+ background:#171323;color:white;border:0;
+ border-radius:50%;width:48px;height:48px;
+ font-size:23px;cursor:pointer;
 }
-.bottom{
+.actions small{display:block;font-size:11px}
+.caption{
+ position:absolute;bottom:18px;left:16px;
+ z-index:2;font-size:14px;
+}
+nav{
  position:fixed;bottom:0;width:100%;
- background:#151520;display:flex;
- justify-content:space-around;padding:17px 5px;
+ height:65px;background:#101019;
+ display:flex;justify-content:space-around;
+ align-items:center;border-top:1px solid #292033;
 }
-.bottom span{font-size:13px;color:white}
+nav button{
+ background:none;border:0;color:#ddd;
+ font-size:12px;cursor:pointer;
+}
+nav button b{display:block;font-size:21px}
+nav .active{color:#bd65ff}
+input{display:none}
 </style>
 </head>
 <body>
+
 <header>
  <div class="logo">TIKORA</div>
- <div>🔍　✉️</div>
+ <span>Découvre le monde 🌍</span>
 </header>
+
+<main class="feed">
+ <div class="video" id="videoBox">
+  <div class="placeholder" id="placeholder">
+   <h2>TIKORA</h2>
+   <p>La vidéo commence ici.</p>
+   <p>Découvre. Partage. Inspire.</p>
+  </div>
+
+  <div class="actions">
+   <button onclick="like()">❤️<small id="likes">0</small></button>
+   <button onclick="comment()">💬<small>Commenter</small></button>
+   <button onclick="share()">↗️<small>Partager</small></button>
+  </div>
+
+  <div class="caption">
+   <b>@TIKORA</b><br>
+   Bienvenue dans notre communauté !
+  </div>
+ </div>
+</main>
+
+<input type="file" id="upload" accept="video/*">
+
 <nav>
- <span>Pour toi</span>
- <span>Abonnements</span>
- <span>Tendances</span>
+ <button class="active"><b>⌂</b>Accueil</button>
+ <button onclick="discover()"><b>⌕</b>Découvrir</button>
+ <button onclick="document.getElementById('upload').click()">
+  <b>＋</b>Publier
+ </button>
+ <button onclick="alert('Notifications bientôt disponibles')">
+  <b>♡</b>Activité
+ </button>
+ <button onclick="alert('Profil bientôt disponible')">
+  <b>◉</b>Profil
+ </button>
 </nav>
-<div class="video">
- <div style="font-size:50px">▶️</div>
- <h2>Bienvenue sur TIKORA 🌍</h2>
- <p>Découvre le monde autrement !</p>
- <p>@tikora_officiel</p>
-</div>
-<div class="actions">
- <span>❤️ 0　💬 0　↗️</span>
- <button>+ Publier</button>
-</div>
-<div class="bottom">
- <span>🏠 Accueil</span>
- <span>🔎 Découvrir</span>
- <span>➕ Publier</span>
- <span>❤️ Activité</span>
- <span>👤 Profil</span>
-</div>
+
+<script>
+let count=0;
+
+function like(){
+ count++;
+ document.getElementById('likes').textContent=count;
+}
+
+function comment(){
+ let message=prompt("Écris ton commentaire :");
+ if(message){
+  alert("Commentaire ajouté à la démonstration !");
+ }
+}
+
+function share(){
+ if(navigator.share){
+  navigator.share({title:"TIKORA",text:"Découvre TIKORA !"});
+ }else{
+  alert("Partage bientôt disponible !");
+ }
+}
+
+function discover(){
+ alert("Découvrir les vidéos : bientôt disponible !");
+}
+
+document.getElementById('upload').addEventListener('change',function(e){
+ const file=e.target.files[0];
+ if(!file)return;
+ const old=document.querySelector('#videoBox video');
+ if(old)URL.revokeObjectURL(old.src);
+ const video=document.createElement('video');
+ video.src=URL.createObjectURL(file);
+ video.controls=true;
+ video.autoplay=true;
+ video.loop=true;
+ document.getElementById('videoBox').appendChild(video);
+ document.getElementById('placeholder').style.display='none';
+});
+</script>
+
 </body>
 </html>
