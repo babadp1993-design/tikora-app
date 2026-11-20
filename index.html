@@ -120,7 +120,21 @@ input{display:none}
 
 <script>
 let count=0;
+function showSignup(){
+  let email=prompt("Entre ton adresse e-mail :");
+  if(!email)return;
+  let password=prompt("Choisis un mot de passe :");
+  if(!password)return;
+  alert("Inscription prête pour connexion Firebase !");
+}
 
+function showLogin(){
+  let email=prompt("Entre ton adresse e-mail :");
+  if(!email)return;
+  let password=prompt("Entre ton mot de passe :");
+  if(!password)return;
+  alert("Connexion prête pour Firebase !");
+ } 
 function like(){
  count++;
  document.getElementById('likes').textContent=count;
