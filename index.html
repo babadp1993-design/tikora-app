@@ -199,6 +199,58 @@ import { getAuth } from "firebase/auth";
   const auth = getAuth(app);
   const analytics = getAnalytics(app);
  
-</script>
+</script> 
+ <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+// Colle ici les valeurs de ta configuration Firebase
+const firebaseConfig = {
+  apiKey: "TON_API_KEY",
+  authDomain: "TON_AUTH_DOMAIN",
+  projectId: "TON_PROJECT_ID",
+  appId: "TON_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.showSignup = async function() {
+  const email = prompt("Ton adresse e-mail :");
+  if (!email) return;
+  const password = prompt("Choisis un mot de passe (6 caractères minimum) :");
+  if (!password) return;
+
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    alert("Bienvenue sur TIKORA !");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.showLogin = async function() {
+  const email = prompt("Ton adresse e-mail :");
+  if (!email) return;
+  const password = prompt("Ton mot de passe :");
+  if (!password) return;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("Connexion réussie !");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+onAuthStateChanged(auth, user => {
+  console.log(user ? "Utilisateur connecté" : "Utilisateur déconnecté");
+});
+ </script>
 </body>
 </html> 
