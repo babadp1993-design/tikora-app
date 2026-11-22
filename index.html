@@ -181,6 +181,7 @@ import { getAnalytics } from "firebase/analytics";
  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth"; 
 import { getAuth } from "firebase/auth";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
+ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
   // Your web app's Firebase configuration
@@ -194,6 +195,11 @@ import { getAuth } from "firebase/auth";
     appId: "1:392391552617:web:7dbee1e1c022a5e197fcf8",
     measurementId: "G-7CRYEQ12WE"
   };
+ // Connexion Supabase
+const supabaseUrl = "sb_publishable_LZ3GANVKZfsyfRvLG5sDYg_G-zTQ8W_";
+const supabaseKey = "https://fevcnodozngezasughdn.supabase.co/rest/v1/";
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
