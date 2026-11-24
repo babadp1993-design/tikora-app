@@ -182,6 +182,14 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+ const SUPABASE_URL = "https://fevcnodozngezasughdn.supabase.co/rest/v1/";
+
+const SUPABASE_ANON_KEY = "sb_publishable_LZ3GANVKZfsyfRvLG5sDYg_G-zTQ8W_";
+
+const supabase = createClient(
+,
+  SUPABASE_ANON_KEY
+);
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
   // Your web app's Firebase configuration
@@ -200,7 +208,7 @@ const supabaseUrl = "sb_publishable_LZ3GANVKZfsyfRvLG5sDYg_G-zTQ8W_";
 const supabaseKey = "https://fevcnodozngezasughdn.supabase.co/rest/v1/";
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-
+console.log("TIKORA connecté à Supabase !");
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
