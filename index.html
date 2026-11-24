@@ -185,11 +185,24 @@ import { getAuth } from "firebase/auth";
  const SUPABASE_URL = "https://fevcnodozngezasughdn.supabase.co/rest/v1/";
 
 const SUPABASE_ANON_KEY = "sb_publishable_LZ3GANVKZfsyfRvLG5sDYg_G-zTQ8W_";
-
 const supabase = createClient(
-,
+  SUPABASE_URL,
   SUPABASE_ANON_KEY
 );
+ async function publierVideo(fichier) {
+  const nomFichier = `${Date.now()}_${fichier.name}`;
+
+  const { data, error } = await supabase.storage
+    .from("TIKORA")
+    .upload(nomFichier, fichier);
+
+  if (error) {
+    alert("Erreur : " + error.message);
+    return;
+  }
+
+  alert("Vidéo publiée avec succès !");
+ }
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
   // Your web app's Firebase configuration
