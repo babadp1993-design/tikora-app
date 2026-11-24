@@ -103,8 +103,7 @@ input{display:none}
  </div>
 </main>
 
-<input type="file" id="upload" accept="video/*"onchange="publierVideo(this.files[0])">
-
+<input type="file" id="upload" accept="video/*" onchange="preparerVideo(this.files[0])">
 <nav>
  <button class="active"><b>⌂</b>Accueil</button>
  <button onclick="discover()"><b>⌕</b>Découvrir</button>
@@ -173,6 +172,7 @@ document.getElementById('upload').addEventListener('change',function(e){
  document.getElementById('videoBox').appendChild(video);
  document.getElementById('placeholder').style.display='none';
 });
+ 
 </script>
 <script type="module">
   // Import the functions you need from the SDKs you need
@@ -217,8 +217,8 @@ const supabase = createClient(
     measurementId: "G-7CRYEQ12WE"
   };
  // Connexion Supabase
-const supabaseUrl = "sb_publishable_LZ3GANVKZfsyfRvLG5sDYg_G-zTQ8W_";
-const supabaseKey = "https://fevcnodozngezasughdn.supabase.co/rest/v1/";
+const supabaseKey  = "sb_publishable_LZ3GANVKZfsyfRvLG5sDYg_G-zTQ8W_";
+const supabaseUrl = "https://fevcnodozngezasughdn.supabase.co/rest/v1/";
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 console.log("TIKORA connecté à Supabase !");
@@ -226,7 +226,27 @@ console.log("TIKORA connecté à Supabase !");
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const analytics = getAnalytics(app);
- 
+
+ let videoApublier = null;
+
+document.getElementById("upload").addEventListener("change", function() {
+  videoApublier = this.files[0];
+
+  if (!videoApublier) return;
+
+  let bouton = document.getElementById("boutonPublier");
+
+  if (!bouton) {
+    bouton = document.createElement("button");
+    bouton.id = "boutonPublier";
+    bouton.textContent = "PUBLIER";
+    document.getElementById("videoBox").appendChild(bouton);
+  }
+
+  bouton.onclick = async function() {
+    await publierVideo(videoApublier);
+  };
+});
 </script> 
  <script type="module"> 
   import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
